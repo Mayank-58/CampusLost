@@ -1,131 +1,373 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import React, { useState } from "react";
 
 function Home() {
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("isLoggedIn") === "true"
+  );
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
+  };
+
   return (
     <div style={styles.page}>
 
       {/* Navbar */}
-      <nav style={styles.navbar}>
-        <div style={styles.logo}>
-          <span style={styles.logoBox}>CL</span>
-          <span>CampusLost</span>
+      <header style={styles.header}>
+        <div style={styles.navbar}>
+
+          <Link to="/" style={styles.logoLink}>
+            <div style={styles.logoBox}>CL</div>
+
+            <div>
+              <h2 style={styles.logoTitle}>CampusLost</h2>
+              <p style={styles.logoSubtitle}>
+                Campus Lost & Found Management System
+              </p>
+            </div>
+          </Link>
+
+          <nav style={styles.navLinks}>
+
+            <Link to="/" style={styles.navLink}>
+              Home
+            </Link>
+
+            <Link to="/find-item" style={styles.navLink}>
+              Find Item
+            </Link>
+
+            <Link to="/report-lost" style={styles.navLink}>
+              Report Lost
+            </Link>
+
+            <Link to="/report-found" style={styles.navLink}>
+              Report Found
+            </Link>
+
+            <Link to="/check-claim-status" style={styles.navLink}>
+              Claim Status
+            </Link>
+
+            <Link to="/contact" style={styles.navLink}>
+              Contact
+            </Link>
+
+            {/* Login / Logout */}
+            {isLoggedIn ? (
+              <button
+                onClick={handleLogout}
+                style={styles.logoutButton}
+              >
+                Logout
+              </button>
+            ) : (
+              <Link to="/login" style={styles.loginButton}>
+                Login
+              </Link>
+            )}
+
+          </nav>
+
         </div>
-
-        <div style={styles.navLinks}>
-          <Link to="/" style={styles.navLink}>
-            Home
-          </Link>
-
-          <Link to="/find-item" style={styles.navLink}>
-            Find Item
-          </Link>
-
-          <Link to="/report-found" style={styles.navLink}>
-            Report Found
-          </Link>
-
-          <Link to="/report-lost" style={styles.navLink}>
-            Report Lost
-          </Link>
-
-          <Link to="/login" style={styles.loginButton}>
-            Login
-          </Link>
-        </div>
-      </nav>
+      </header>
 
       {/* Hero Section */}
-      <section style={styles.hero}>
-        <div style={styles.heroContent}>
-          <p style={styles.smallTitle}>CAMPUS LOST & FOUND</p>
+      <section style={styles.heroSection}>
 
-          <h1 style={styles.heading}>
-            Find What You Lost.
-            <br />
-            Return What You Found.
-          </h1>
+        <div style={styles.heroContainer}>
 
-          <p style={styles.description}>
-            CampusLost helps students report found items, search for lost
-            belongings and securely verify ownership before returning them.
-          </p>
+          <div style={styles.heroContent}>
 
-          <div style={styles.buttonContainer}>
-            <Link to="/find-item" style={styles.primaryButton}>
-              🔍 Find My Item
-            </Link>
+            <p style={styles.heroLabel}>
+              CAMPUS LOST & FOUND
+            </p>
 
-            <Link to="/report-found" style={styles.secondaryButton}>
-              📦 Report Found Item
-            </Link>
+            <h1 style={styles.heroTitle}>
+              Lost something on campus?
+              <br />
+              <span style={styles.highlight}>
+                We can help you find it.
+              </span>
+            </h1>
+
+            <p style={styles.heroDescription}>
+              CampusLost makes it easier for students to report lost and
+              found belongings, search for matching items, and securely
+              verify ownership before an item is returned.
+            </p>
+
+            <div style={styles.heroButtons}>
+
+              <Link
+                to="/find-item"
+                style={styles.primaryButton}
+              >
+                Find My Item
+              </Link>
+
+              <Link
+                to="/report-lost"
+                style={styles.secondaryButton}
+              >
+                Report Lost Item
+              </Link>
+
+              <Link
+                to="/report-found"
+                style={styles.outlineButton}
+              >
+                Report Found Item
+              </Link>
+
+            </div>
+
+            <div style={styles.statusLinkArea}>
+              <span style={styles.statusText}>
+                Already submitted a claim?
+              </span>
+
+              <Link
+                to="/check-claim-status"
+                style={styles.statusLink}
+              >
+                Check Claim Status
+              </Link>
+            </div>
+
           </div>
-        </div>
 
-        <div style={styles.heroCard}>
-          <div style={styles.cardIcon}>🔎</div>
+          {/* Hero Card */}
+          <div style={styles.heroCard}>
 
-          <h3 style={styles.cardTitle}>Lost Something?</h3>
+            <div style={styles.cardHeader}>
+              <p style={styles.cardSmallTitle}>
+                HOW IT WORKS
+              </p>
 
-          <p style={styles.cardText}>
-            Search reported items around your campus and submit a claim when
-            you find a matching item.
-          </p>
+              <h2 style={styles.cardTitle}>
+                Find. Verify. Return.
+              </h2>
+            </div>
 
-          <Link to="/find-item" style={styles.cardButton}>
-            Search Items →
-          </Link>
+            <div style={styles.step}>
+              <div style={styles.stepNumber}>01</div>
+
+              <div>
+                <h3 style={styles.stepTitle}>
+                  Report
+                </h3>
+
+                <p style={styles.stepText}>
+                  Report a lost or found item with its details and photo.
+                </p>
+              </div>
+            </div>
+
+            <div style={styles.step}>
+              <div style={styles.stepNumber}>02</div>
+
+              <div>
+                <h3 style={styles.stepTitle}>
+                  Search
+                </h3>
+
+                <p style={styles.stepText}>
+                  Search reported found items using categories and locations.
+                </p>
+              </div>
+            </div>
+
+            <div style={styles.step}>
+              <div style={styles.stepNumber}>03</div>
+
+              <div>
+                <h3 style={styles.stepTitle}>
+                  Verify
+                </h3>
+
+                <p style={styles.stepText}>
+                  Submit ownership information and proof for verification.
+                </p>
+              </div>
+            </div>
+
+            <div style={styles.step}>
+              <div style={styles.stepNumber}>04</div>
+
+              <div>
+                <h3 style={styles.stepTitle}>
+                  Return
+                </h3>
+
+                <p style={styles.stepText}>
+                  Once approved, collect your item from the designated desk.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </section>
 
-      {/* How It Works */}
-      <section style={styles.howSection}>
-        <h2 style={styles.sectionTitle}>How CampusLost Works</h2>
+      {/* Features Section */}
+      <section style={styles.featuresSection}>
 
-        <p style={styles.sectionText}>
-          A simple and secure way to find and return lost belongings.
-        </p>
+        <div style={styles.sectionHeading}>
+          <p style={styles.sectionLabel}>
+            PLATFORM FEATURES
+          </p>
 
-        <div style={styles.steps}>
+          <h2 style={styles.sectionTitle}>
+            Everything you need to recover lost belongings
+          </h2>
 
-          <div style={styles.stepCard}>
-            <div style={styles.stepNumber}>1</div>
-            <h3>Report</h3>
-            <p>
-              Report a lost or found item with its details and photo.
+          <p style={styles.sectionDescription}>
+            CampusLost provides a simple and secure workflow for the entire
+            lost and found process.
+          </p>
+        </div>
+
+        <div style={styles.featureGrid}>
+
+          <div style={styles.featureCard}>
+            <h3 style={styles.featureTitle}>
+              Easy Item Reporting
+            </h3>
+
+            <p style={styles.featureText}>
+              Report lost or found belongings with category, location,
+              date, description and supporting photos.
             </p>
+
+            <Link
+              to="/report-found"
+              style={styles.featureLink}
+            >
+              Report Found Item
+            </Link>
           </div>
 
-          <div style={styles.stepCard}>
-            <div style={styles.stepNumber}>2</div>
-            <h3>Search</h3>
-            <p>
-              Search the campus database for your lost item.
+          <div style={styles.featureCard}>
+            <h3 style={styles.featureTitle}>
+              Smart Search
+            </h3>
+
+            <p style={styles.featureText}>
+              Search reported found items using item name, category and
+              campus location.
             </p>
+
+            <Link
+              to="/find-item"
+              style={styles.featureLink}
+            >
+              Search Items
+            </Link>
           </div>
 
-          <div style={styles.stepCard}>
-            <div style={styles.stepNumber}>3</div>
-            <h3>Verify</h3>
-            <p>
-              Submit ownership proof to verify that the item belongs to you.
-            </p>
-          </div>
+          <div style={styles.featureCard}>
+            <h3 style={styles.featureTitle}>
+              Ownership Verification
+            </h3>
 
-          <div style={styles.stepCard}>
-            <div style={styles.stepNumber}>4</div>
-            <h3>Return</h3>
-            <p>
-              Once verified, safely collect your item.
+            <p style={styles.featureText}>
+              Submit identifying details and ownership proof before
+              requesting an item.
             </p>
+
+            <Link
+              to="/check-claim-status"
+              style={styles.featureLink}
+            >
+              Check Claim
+            </Link>
           </div>
 
         </div>
+
+      </section>
+
+      {/* CTA Section */}
+      <section style={styles.ctaSection}>
+
+        <div style={styles.ctaContainer}>
+
+          <div>
+            <p style={styles.ctaLabel}>
+              LOST SOMETHING?
+            </p>
+
+            <h2 style={styles.ctaTitle}>
+              Start searching for your item today.
+            </h2>
+
+            <p style={styles.ctaText}>
+              Search through items reported by students across campus.
+            </p>
+          </div>
+
+          <Link
+            to="/find-item"
+            style={styles.ctaButton}
+          >
+            Find My Item
+          </Link>
+
+        </div>
+
       </section>
 
       {/* Footer */}
       <footer style={styles.footer}>
-        <p>© 2026 CampusLost. Campus Lost & Found Management System.</p>
+
+        <div style={styles.footerContainer}>
+
+          <div>
+            <div style={styles.footerLogo}>
+              <div style={styles.footerLogoBox}>CL</div>
+
+              <span>CampusLost</span>
+            </div>
+
+            <p style={styles.footerDescription}>
+              Campus Lost & Found Management System
+            </p>
+          </div>
+
+          <div style={styles.footerLinks}>
+
+            <Link to="/" style={styles.footerLink}>
+              Home
+            </Link>
+
+            <Link to="/find-item" style={styles.footerLink}>
+              Find Item
+            </Link>
+
+            <Link to="/report-lost" style={styles.footerLink}>
+              Report Lost
+            </Link>
+
+            <Link to="/report-found" style={styles.footerLink}>
+              Report Found
+            </Link>
+
+            <Link to="/contact" style={styles.footerLink}>
+              Contact
+            </Link>
+
+          </div>
+
+        </div>
+
+        <div style={styles.footerBottom}>
+          © 2026 CampusLost. All rights reserved.
+        </div>
+
       </footer>
 
     </div>
@@ -136,98 +378,147 @@ const styles = {
   page: {
     minHeight: "100vh",
     backgroundColor: "#f8fafc",
-    fontFamily: "Arial, sans-serif",
     color: "#1e293b",
+    fontFamily: "Arial, sans-serif",
+  },
+
+  header: {
+    backgroundColor: "#ffffff",
+    borderBottom: "1px solid #e2e8f0",
+    position: "sticky",
+    top: 0,
+    zIndex: 100,
   },
 
   navbar: {
-    height: "70px",
-    backgroundColor: "#ffffff",
+    maxWidth: "1250px",
+    margin: "0 auto",
+    minHeight: "72px",
+    padding: "0 25px",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "0 7%",
-    borderBottom: "1px solid #e2e8f0",
+    gap: "30px",
   },
 
-  logo: {
+  logoLink: {
     display: "flex",
     alignItems: "center",
-    gap: "10px",
-    fontSize: "22px",
-    fontWeight: "bold",
+    gap: "11px",
+    textDecoration: "none",
     color: "#1e40af",
   },
 
   logoBox: {
-    width: "38px",
-    height: "38px",
-    borderRadius: "8px",
+    width: "42px",
+    height: "42px",
     backgroundColor: "#2563eb",
     color: "#ffffff",
+    borderRadius: "9px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     fontSize: "14px",
+    fontWeight: "bold",
+  },
+
+  logoTitle: {
+    margin: 0,
+    fontSize: "19px",
+  },
+
+  logoSubtitle: {
+    margin: "3px 0 0",
+    color: "#94a3b8",
+    fontSize: "10px",
   },
 
   navLinks: {
     display: "flex",
     alignItems: "center",
-    gap: "22px",
+    gap: "20px",
+    flexWrap: "wrap",
   },
 
   navLink: {
     textDecoration: "none",
     color: "#475569",
-    fontSize: "14px",
+    fontSize: "13px",
   },
 
   loginButton: {
     textDecoration: "none",
     color: "#ffffff",
     backgroundColor: "#2563eb",
-    padding: "10px 20px",
-    borderRadius: "7px",
-    fontSize: "14px",
+    padding: "10px 18px",
+    borderRadius: "6px",
+    fontSize: "13px",
+    fontWeight: "600",
   },
 
-  hero: {
-    display: "flex",
-    justifyContent: "space-between",
+  logoutButton: {
+    color: "#ffffff",
+    backgroundColor: "#2563eb",
+    padding: "10px 18px",
+    borderRadius: "6px",
+    border: "none",
+    fontSize: "13px",
+    fontWeight: "600",
+    cursor: "pointer",
+    fontFamily: "Arial, sans-serif",
+  },
+
+  heroSection: {
+    background:
+      "linear-gradient(135deg, #eff6ff 0%, #f8fafc 55%, #ffffff 100%)",
+    borderBottom: "1px solid #e2e8f0",
+  },
+
+  heroContainer: {
+    maxWidth: "1250px",
+    margin: "0 auto",
+    padding: "85px 25px",
+    display: "grid",
+    gridTemplateColumns: "1.2fr 0.8fr",
     alignItems: "center",
-    padding: "80px 8%",
-    gap: "50px",
+    gap: "70px",
   },
 
   heroContent: {
-    maxWidth: "650px",
+    maxWidth: "700px",
   },
 
-  smallTitle: {
+  heroLabel: {
+    margin: 0,
     color: "#2563eb",
-    fontSize: "13px",
-    fontWeight: "bold",
+    fontSize: "12px",
     letterSpacing: "2px",
+    fontWeight: "700",
   },
 
-  heading: {
-    fontSize: "48px",
-    lineHeight: "1.15",
-    margin: "15px 0",
+  heroTitle: {
+    margin: "15px 0 20px",
+    fontSize: "52px",
+    lineHeight: "1.12",
     color: "#0f172a",
   },
 
-  description: {
-    fontSize: "17px",
-    lineHeight: "1.7",
-    color: "#64748b",
-    maxWidth: "600px",
+  highlight: {
+    color: "#2563eb",
   },
 
-  buttonContainer: {
+  heroDescription: {
+    margin: 0,
+    maxWidth: "650px",
+    color: "#64748b",
+    fontSize: "16px",
+    lineHeight: "1.8",
+  },
+
+  heroButtons: {
     display: "flex",
-    gap: "15px",
+    gap: "12px",
+    flexWrap: "wrap",
     marginTop: "30px",
   },
 
@@ -235,102 +526,286 @@ const styles = {
     textDecoration: "none",
     backgroundColor: "#2563eb",
     color: "#ffffff",
-    padding: "13px 22px",
+    padding: "13px 20px",
     borderRadius: "7px",
-    fontWeight: "bold",
+    fontSize: "14px",
+    fontWeight: "600",
   },
 
   secondaryButton: {
     textDecoration: "none",
+    backgroundColor: "#0f172a",
+    color: "#ffffff",
+    padding: "13px 20px",
+    borderRadius: "7px",
+    fontSize: "14px",
+    fontWeight: "600",
+  },
+
+  outlineButton: {
+    textDecoration: "none",
     backgroundColor: "#ffffff",
     color: "#2563eb",
-    padding: "13px 22px",
-    borderRadius: "7px",
     border: "1px solid #2563eb",
-    fontWeight: "bold",
+    padding: "13px 20px",
+    borderRadius: "7px",
+    fontSize: "14px",
+    fontWeight: "600",
+  },
+
+  statusLinkArea: {
+    marginTop: "18px",
+    display: "flex",
+    alignItems: "center",
+    gap: "7px",
+    flexWrap: "wrap",
+  },
+
+  statusText: {
+    color: "#64748b",
+    fontSize: "13px",
+  },
+
+  statusLink: {
+    color: "#2563eb",
+    textDecoration: "none",
+    fontWeight: "600",
+    fontSize: "13px",
   },
 
   heroCard: {
-    width: "310px",
-    padding: "35px",
     backgroundColor: "#ffffff",
-    borderRadius: "15px",
-    boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
-    textAlign: "center",
+    borderRadius: "16px",
+    padding: "30px",
+    boxShadow: "0 15px 40px rgba(15,23,42,0.08)",
+    border: "1px solid #e2e8f0",
   },
 
-  cardIcon: {
-    fontSize: "45px",
-    marginBottom: "10px",
+  cardHeader: {
+    paddingBottom: "20px",
+    borderBottom: "1px solid #e2e8f0",
+    marginBottom: "5px",
+  },
+
+  cardSmallTitle: {
+    margin: 0,
+    color: "#2563eb",
+    fontSize: "11px",
+    letterSpacing: "1.5px",
+    fontWeight: "700",
   },
 
   cardTitle: {
-    fontSize: "23px",
-    marginBottom: "10px",
+    margin: "8px 0 0",
+    fontSize: "26px",
+    color: "#0f172a",
   },
 
-  cardText: {
-    color: "#64748b",
-    lineHeight: "1.6",
-    fontSize: "14px",
-  },
-
-  cardButton: {
-    display: "inline-block",
-    marginTop: "15px",
-    textDecoration: "none",
-    color: "#2563eb",
-    fontWeight: "bold",
-  },
-
-  howSection: {
-    padding: "70px 8%",
-    backgroundColor: "#ffffff",
-    textAlign: "center",
-  },
-
-  sectionTitle: {
-    fontSize: "32px",
-    marginBottom: "10px",
-  },
-
-  sectionText: {
-    color: "#64748b",
-    marginBottom: "40px",
-  },
-
-  steps: {
-    display: "grid",
-    gridTemplateColumns: "repeat(4, 1fr)",
-    gap: "20px",
-  },
-
-  stepCard: {
-    padding: "25px",
-    border: "1px solid #e2e8f0",
-    borderRadius: "12px",
-    backgroundColor: "#f8fafc",
+  step: {
+    display: "flex",
+    gap: "15px",
+    padding: "18px 0",
+    borderBottom: "1px solid #f1f5f9",
   },
 
   stepNumber: {
-    width: "40px",
-    height: "40px",
-    borderRadius: "50%",
-    backgroundColor: "#2563eb",
-    color: "#ffffff",
+    width: "38px",
+    minWidth: "38px",
+    height: "38px",
+    borderRadius: "8px",
+    backgroundColor: "#eff6ff",
+    color: "#2563eb",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    margin: "0 auto 15px",
-    fontWeight: "bold",
+    fontSize: "11px",
+    fontWeight: "700",
+  },
+
+  stepTitle: {
+    margin: "0 0 5px",
+    fontSize: "15px",
+    color: "#0f172a",
+  },
+
+  stepText: {
+    margin: 0,
+    color: "#64748b",
+    fontSize: "13px",
+    lineHeight: "1.5",
+  },
+
+  featuresSection: {
+    maxWidth: "1250px",
+    margin: "0 auto",
+    padding: "85px 25px",
+  },
+
+  sectionHeading: {
+    textAlign: "center",
+    maxWidth: "700px",
+    margin: "0 auto 45px",
+  },
+
+  sectionLabel: {
+    margin: 0,
+    color: "#2563eb",
+    fontSize: "11px",
+    letterSpacing: "2px",
+    fontWeight: "700",
+  },
+
+  sectionTitle: {
+    margin: "10px 0",
+    fontSize: "34px",
+    color: "#0f172a",
+  },
+
+  sectionDescription: {
+    margin: 0,
+    color: "#64748b",
+    lineHeight: "1.7",
+  },
+
+  featureGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(3, 1fr)",
+    gap: "22px",
+  },
+
+  featureCard: {
+    backgroundColor: "#ffffff",
+    border: "1px solid #e2e8f0",
+    borderRadius: "12px",
+    padding: "28px",
+    boxShadow: "0 5px 20px rgba(15,23,42,0.04)",
+  },
+
+  featureTitle: {
+    margin: "0 0 10px",
+    fontSize: "20px",
+    color: "#0f172a",
+  },
+
+  featureText: {
+    margin: 0,
+    color: "#64748b",
+    lineHeight: "1.7",
+    fontSize: "14px",
+  },
+
+  featureLink: {
+    display: "inline-block",
+    marginTop: "20px",
+    color: "#2563eb",
+    textDecoration: "none",
+    fontSize: "13px",
+    fontWeight: "600",
+  },
+
+  ctaSection: {
+    backgroundColor: "#0f172a",
+  },
+
+  ctaContainer: {
+    maxWidth: "1250px",
+    margin: "0 auto",
+    padding: "55px 25px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: "30px",
+  },
+
+  ctaLabel: {
+    margin: 0,
+    color: "#93c5fd",
+    fontSize: "11px",
+    letterSpacing: "2px",
+    fontWeight: "700",
+  },
+
+  ctaTitle: {
+    margin: "10px 0",
+    color: "#ffffff",
+    fontSize: "30px",
+  },
+
+  ctaText: {
+    margin: 0,
+    color: "#cbd5e1",
+    fontSize: "14px",
+  },
+
+  ctaButton: {
+    textDecoration: "none",
+    backgroundColor: "#2563eb",
+    color: "#ffffff",
+    padding: "13px 22px",
+    borderRadius: "7px",
+    fontSize: "14px",
+    fontWeight: "600",
+    whiteSpace: "nowrap",
   },
 
   footer: {
-    textAlign: "center",
-    padding: "25px",
-    backgroundColor: "#0f172a",
+    backgroundColor: "#020617",
     color: "#cbd5e1",
-    fontSize: "13px",
+  },
+
+  footerContainer: {
+    maxWidth: "1250px",
+    margin: "0 auto",
+    padding: "35px 25px",
+    display: "flex",
+    justifyContent: "space-between",
+    gap: "30px",
+  },
+
+  footerLogo: {
+    display: "flex",
+    alignItems: "center",
+    gap: "9px",
+    color: "#ffffff",
+    fontWeight: "600",
+  },
+
+  footerLogoBox: {
+    width: "32px",
+    height: "32px",
+    borderRadius: "6px",
+    backgroundColor: "#2563eb",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "11px",
+  },
+
+  footerDescription: {
+    marginTop: "8px",
+    color: "#64748b",
+    fontSize: "12px",
+  },
+
+  footerLinks: {
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "center",
+    gap: "18px",
+  },
+
+  footerLink: {
+    color: "#cbd5e1",
+    textDecoration: "none",
+    fontSize: "12px",
+  },
+
+  footerBottom: {
+    borderTop: "1px solid #1e293b",
+    padding: "18px 25px",
+    textAlign: "center",
+    color: "#64748b",
+    fontSize: "11px",
   },
 };
 
